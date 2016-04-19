@@ -85,11 +85,7 @@ public class Sudoku {
             result += grid[row][column] + "";
          result += "\n";
       }
-      int hola=0;
-      int h=0;
-      h++;
-      String esi;
-      int ejemplo=0;
+
 
       return result;
    }
