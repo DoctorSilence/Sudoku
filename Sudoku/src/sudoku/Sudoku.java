@@ -88,6 +88,8 @@ public class Sudoku {
       int hola=0;
       int h=0;
       h++;
+      String esi;
+      int ejemplo=0;
 
       return result;
    }
