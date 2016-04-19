@@ -85,6 +85,7 @@ public class Sudoku {
             result += grid[row][column] + "";
          result += "\n";
       }
+      int hola=0;
 
       return result;
    }
