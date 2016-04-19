@@ -86,7 +86,6 @@ public class Sudoku {
          result += "\n";
       }
 
-
       return result;
    }
 }
