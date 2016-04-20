@@ -99,7 +99,7 @@ public class Sudoku {
         return result;
     }
 
-    private void agregaFila(int fila, int col) {
+    private void agregaF(int fila, int col) {
         if (col < sudoku.length) {
             temporal.agrega(sudoku[fila][col]);
             agregaFila(fila, col + 1);
