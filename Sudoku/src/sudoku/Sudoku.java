@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author Daniel
+ * @author Victor Cruz, Fabian Orduña
  */
 public class Sudoku {
 
@@ -116,7 +116,7 @@ public class Sudoku {
     public boolean cambiaDatos(int fila, int col, int dato){
         boolean status=false;
         
-        if(sudoku[fila][col]!=0){
+        if(sudoku[fila][col]==0){
             sudoku[fila][col]=dato;
             status=true;
         }

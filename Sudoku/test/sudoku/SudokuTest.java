@@ -57,8 +57,9 @@ public class SudokuTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Sudoku instance = new Sudoku();
-        String expResult = "";
+        Sudoku instance = new Sudoku(2);
+        String expResult ="\n00\n"
+                + "00\n";
         String result = instance.toString();
         assertEquals(expResult, result);
     }
@@ -71,9 +72,9 @@ public class SudokuTest {
         System.out.println("cambiaDatos");
         int fila = 0;
         int col = 0;
-        int dato = 0;
+        int dato = 5;
         Sudoku instance = new Sudoku();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.cambiaDatos(fila, col, dato);
         assertEquals(expResult, result);
     }
