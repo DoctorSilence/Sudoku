@@ -5,6 +5,8 @@
  */
 package sudoku;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Daniel
@@ -13,6 +15,8 @@ public class Sudoku {
 
     private ConjuntoA<Integer> madre = new ConjuntoA();
     private ConjuntoA<Integer> temporal = new ConjuntoA();
+    private ConjuntoADT<Integer> dif;
+    private Iterator<Integer> it;
     private int[][] sudoku;
     private int[] limite = cuenta3x3(0, 0); //CHECAR POSICIONES 0,0
 
@@ -30,8 +34,8 @@ public class Sudoku {
                 limite = cuenta3x3(fila, col);
             }
             agrega(fila, col, limite);
-            ConjuntoA<Integer> dif = madre.diferencia(temporal);
-            Iterator<Integer> it = dif.iterator();
+            dif = madre.diferencia(temporal);
+            it = dif.iterator();
             sudoku[fila][col] = it.next();
 
             if (fila == sudoku.length - 1 && col == sudoku[0].length - 1) {
@@ -54,12 +58,12 @@ public class Sudoku {
                     limite = cuenta3x3(fila, col);
                 }
                 agrega(fila, col, limite);
-                ConjuntoA<Integer> dif = madre.diferencia(temporal);
+                dif = madre.diferencia(temporal);
                 Iterator<Integer> it = dif.iterator();
                 sudoku[fila][col] = it.next();
             }
         }
-        return done;
+        return status;
     }
 
     private boolean valido(int row, int column) {
@@ -68,12 +72,12 @@ public class Sudoku {
         /**
          * check if cell is in the bounds of the matrix
          */
-        if (row >= 0 && row < grid.length
-                && column >= 0 && column < grid[row].length) /**
+        if (row >= 0 && row < sudoku.length
+                && column >= 0 && column < sudoku[row].length) /**
          * check if cell is not blocked and not previously tried
          */
         {
-            if (grid[row][column] == 1) {
+            if (sudoku[row][column] == 1) {
                 result = true;
             }
         }
@@ -89,9 +93,9 @@ public class Sudoku {
     public String toString() {
         String result = "\n";
 
-        for (int row = 0; row < grid.length; row++) {
-            for (int column = 0; column < grid[row].length; column++) {
-                result += grid[row][column] + "";
+        for (int row = 0; row < sudoku.length; row++) {
+            for (int column = 0; column < sudoku[row].length; column++) {
+                result += sudoku[row][column] + "";
             }
             result += "\n";
         }
@@ -104,5 +108,16 @@ public class Sudoku {
             temporal.agrega(sudoku[fila][col]);
             agregaFila(fila, col + 1);
         }
+    }
+    
+    private int[] cuenta3x3(int fila, int col){
+        int[] resultado = null;
+        
+        
+        return resultado;
+    }
+    
+    private void agrega(int fila, int col, int[] limite){
+    
     }
 }
