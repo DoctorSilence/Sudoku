@@ -20,9 +20,8 @@ public class Sudoku {
     private int[] limite = cuenta3x3(0, 0); //CHECAR POSICIONES 0,0
 
     public Sudoku() {
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 10; i++)
             madre.agrega(i);
-        }
     }
 
     public boolean camino(int fila, int col) {
@@ -65,23 +64,12 @@ public class Sudoku {
         return status;
     }
 
-    private boolean valido(int row, int column) {
-        boolean result = false;
+    private boolean valido(int fila, int col) {
+        boolean status = false;
 
-        /**
-         * check if cell is in the bounds of the matrix
-         */
-        if (row >= 0 && row < sudoku.length
-                && column >= 0 && column < sudoku[row].length) /**
-         * check if cell is not blocked and not previously tried
-         */
-        {
-            if (sudoku[row][column] == 1) {
-                result = true;
-            }
-        }
+        status = fila >= 0 && col < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] == 0;
 
-        return result;
+        return status;
     }
 
     /**
@@ -117,6 +105,6 @@ public class Sudoku {
     }
     
     private void agrega(int fila, int col, int[] limite){
-    
+        
     }
 }
