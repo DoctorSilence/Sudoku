@@ -15,7 +15,7 @@ public class Sudoku {
 
     private ConjuntoA<Integer> madre = new ConjuntoA();
     private int[][] sudoku;
-    private int[] limite = cuenta3x3(0, 0); //CHECAR POSICIONES 0,0
+    private int[] limite = cuenta3x3(0, 0); //Checa posiciones 0,0
 
     public Sudoku() {
         for (int i = 1; i < 10; i++)
@@ -23,8 +23,8 @@ public class Sudoku {
     }
 
     public boolean camino(int fila, int col) {
-        boolean status = false;
-
+        boolean status=false;
+        
         if (valido(fila, col)) {
             if (fila > limite[0] + 2 || col > limite[1] + 2)
                 limite = cuenta3x3(fila, col);
@@ -32,31 +32,15 @@ public class Sudoku {
             ConjuntoADT<Integer> dif=madre.diferencia(temporal);
             Iterator<Integer> it=dif.iterator();
             sudoku[fila][col] = it.next();
-
-            if (fila == sudoku.length - 1 && col == sudoku[0].length - 1) {
-                status = true;
-            } else {
-                status = camino(fila + 1, col);     //abajo
-                if (!status) {
-                    status = camino(fila, col + 1);  //derecha
-                }
-                if (!status) {
-                    status = camino(fila - 1, col);  //arriba
-                }
-                if (!status) {
-                    status = camino(fila, col - 1);  //izquierda
-                }
-            }
-
-            if (status) {
-                if (fila > limite[0] + 2 || col > limite[1] + 2)
-                    limite = cuenta3x3(fila, col);
-                temporal = agrega(fila, col, limite);
-                dif = madre.diferencia(temporal);
-                it = dif.iterator();
-                sudoku[fila][col] = it.next();
-            }
+            status= camino(fila,col+1);
         }
+        else{
+            if (fila == sudoku.length - 1 && col == sudoku[0].length - 1)
+                status= true;
+            else if(col>sudoku[0].length-1)
+                    col=0;
+        }
+        
         return status;
     }
 
