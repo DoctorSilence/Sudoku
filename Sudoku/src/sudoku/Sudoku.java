@@ -62,11 +62,7 @@ public class Sudoku {
     }
 
     private boolean valido(int fila, int col) {
-        boolean status = false;
-
-        status = fila >= 0 && col < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] == 0;
-
-        return status;
+        return fila >= 0 && col < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] == 0;
     }
 
     /**
