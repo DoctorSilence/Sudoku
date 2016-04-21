@@ -47,9 +47,14 @@ public class Sudoku {
         else{
             if (fila == sudoku.length && col == sudoku[0].length)
                 status= true;
-            else if(col>sudoku[0].length-1){
-                col=0;
-                fila++;
+            else{
+                if(sudoku[fila][col]!=0){
+                    col++;
+                }
+                else{
+                    col=0;
+                    fila++;
+                }
                 status=camino(fila,col);
             }
         }
