@@ -15,8 +15,7 @@ public class Sudoku {
 
     private ConjuntoA<Integer> madre = new ConjuntoA();
     private ConjuntoA<Integer> temporal = new ConjuntoA();
-    private ConjuntoADT<Integer> dif;
-    private Iterator<Integer> it;
+    
     private int[][] sudoku;
     private int[] limite = cuenta3x3(0, 0); //CHECAR POSICIONES 0,0
 
@@ -34,8 +33,8 @@ public class Sudoku {
                 limite = cuenta3x3(fila, col);
             }
             agrega(fila, col, limite);
-            dif = madre.diferencia(temporal);
-            it = dif.iterator();
+            ConjuntoADT<Integer> dif=madre.diferencia(temporal);
+            Iterator<Integer> it=dif.iterator();
             sudoku[fila][col] = it.next();
 
             if (fila == sudoku.length - 1 && col == sudoku[0].length - 1) {
@@ -59,7 +58,7 @@ public class Sudoku {
                 }
                 agrega(fila, col, limite);
                 dif = madre.diferencia(temporal);
-                Iterator<Integer> it = dif.iterator();
+                it = dif.iterator();
                 sudoku[fila][col] = it.next();
             }
         }
