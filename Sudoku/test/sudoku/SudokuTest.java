@@ -65,18 +65,32 @@ public class SudokuTest {
     }
 
     /**
-     * Test of cambiaDatos method, of class Sudoku.
+     * Test of setCelda method, of class Sudoku.
      */
     @Test
-    public void testCambiaDatos() {
-        System.out.println("cambiaDatos");
+    public void testSetCelda() {
+        System.out.println("setCelda");
         int fila = 0;
         int col = 0;
         int dato = 5;
         Sudoku instance = new Sudoku();
         boolean expResult = true;
-        boolean result = instance.cambiaDatos(fila, col, dato);
+        boolean result = instance.setCelda(fila, col, dato);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getSudoku method, of class Sudoku.
+     */
+    @Test
+    public void testGetSudoku() {
+        System.out.println("getSudoku");
+        Sudoku instance = new Sudoku();
+        int[][] expResult = null;
+        int[][] result = instance.getSudoku();
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }
