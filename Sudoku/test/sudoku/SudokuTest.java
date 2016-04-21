@@ -41,13 +41,13 @@ public class SudokuTest {
      * Test of camino method, of class Sudoku.
      */
     @Test
-    public void testCamino() {
+    public void testSolucion() {
         System.out.println("camino");
         int fila = 0;
         int col = 0;
         Sudoku instance = new Sudoku();
         boolean expResult = false;
-        boolean result = instance.camino(fila, col);
+        boolean result = instance.solucion(fila, col);
         assertEquals(expResult, result);
     }
 

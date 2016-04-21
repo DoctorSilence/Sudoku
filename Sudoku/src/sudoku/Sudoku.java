@@ -32,7 +32,7 @@ public class Sudoku {
     }
     
 
-    public boolean camino(int fila, int col) {
+    public boolean solucion(int fila, int col) {
         boolean status=false;
         
         if (valido(fila, col)) {
@@ -42,7 +42,7 @@ public class Sudoku {
             ConjuntoADT<Integer> dif=madre.diferencia(temporal);
             Iterator<Integer> it=dif.iterator();
             sudoku[fila][col] = it.next();
-            status= camino(fila,col+1);
+            status= solucion(fila,col+1);
         }
         else{
             if (fila == sudoku.length && col == sudoku[0].length)
@@ -54,7 +54,7 @@ public class Sudoku {
                 }
                 else
                     col++;
-                status=camino(fila,col);
+                status=solucion(fila,col);
             }
         }
         
