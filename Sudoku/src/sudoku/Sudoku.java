@@ -33,15 +33,27 @@ public class Sudoku {
     
 
     public boolean solucion(int fila, int col) {
-        boolean status;
+        boolean status=false;
         
         if (valido(fila, col)) {
+            //MODIFICACION
+            sudoku[fila][col]=-1;
+            if(fila==sudoku.length-1&&col==sudoku[0].length-1)
+                status=true;
+            else{
+                status=solucion(fila,col+1);
+                if(!status)
+                    status=solucion(fila+1,0);
+            }
+            //MODIFICACION
             if (fila > limite[0] + 2 || col > limite[1] + 2)
                 limite = cuenta3x3(fila, col);
             ConjuntoA<Integer> temporal=agrega(fila, col, limite);
             ConjuntoADT<Integer> dif=madre.diferencia(temporal);
-            Iterator<Integer> it=dif.iterator();
-            sudoku[fila][col] = it.next();
+            if(dif.getCardinalidad()!=1){
+                Iterator<Integer> it=dif.iterator();
+                sudoku[fila][col] = it.next();
+            }
             status= solucion(fila,col+1);
         }
         else{
