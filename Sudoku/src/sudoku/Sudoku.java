@@ -14,8 +14,6 @@ import java.util.Iterator;
 public class Sudoku {
 
     private ConjuntoA<Integer> madre = new ConjuntoA();
-    private ConjuntoA<Integer> temporal = new ConjuntoA();
-    
     private int[][] sudoku;
     private int[] limite = cuenta3x3(0, 0); //CHECAR POSICIONES 0,0
 
@@ -28,10 +26,9 @@ public class Sudoku {
         boolean status = false;
 
         if (valido(fila, col)) {
-            if (fila > limite[0] + 2 || col > limite[1] + 2) {
+            if (fila > limite[0] + 2 || col > limite[1] + 2)
                 limite = cuenta3x3(fila, col);
-            }
-            agrega(fila, col, limite);
+            ConjuntoA<Integer> temporal=agrega(fila, col, limite);
             ConjuntoADT<Integer> dif=madre.diferencia(temporal);
             Iterator<Integer> it=dif.iterator();
             sudoku[fila][col] = it.next();
@@ -52,10 +49,9 @@ public class Sudoku {
             }
 
             if (status) {
-                if (fila > limite[0] + 2 || col > limite[1] + 2) {
+                if (fila > limite[0] + 2 || col > limite[1] + 2)
                     limite = cuenta3x3(fila, col);
-                }
-                agrega(fila, col, limite);
+                temporal = agrega(fila, col, limite);
                 dif = madre.diferencia(temporal);
                 it = dif.iterator();
                 sudoku[fila][col] = it.next();
@@ -90,10 +86,10 @@ public class Sudoku {
         return result;
     }
 
-    private void agregaFila(int fila, int col) {
+    private void agregaFila(int fila, int col, ConjuntoA<Integer> temporal) {
         if (col < sudoku.length) {
             temporal.agrega(sudoku[fila][col]);
-            agregaFila(fila, col + 1);
+            agregaFila(fila, col + 1,temporal);
         }
     }
     
@@ -104,7 +100,24 @@ public class Sudoku {
         return resultado;
     }
     
-    private void agrega(int fila, int col, int[] limite){
+    private void agregaCol(int fila, int col, ConjuntoA<Integer> temporal) {
+        if (fila < sudoku.length) {
+            temporal.agrega(sudoku[fila][col]);
+            agregaFila(fila+1, col, temporal);
+        }
+    }
+    
+    private void agrega3x3(int fila, int col,int[] limite, ConjuntoA<Integer> temporal) {
         
+    }
+    
+    private ConjuntoA<Integer> agrega(int fila, int col, int[] limite){
+        ConjuntoA<Integer> temporal=new ConjuntoA();
+        
+        agregaFila(fila, col,temporal);
+        agregaCol(fila, col,temporal);
+        agrega3x3(fila, col, limite,temporal);
+        
+        return temporal;
     }
 }
