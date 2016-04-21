@@ -73,9 +73,9 @@ public class Sudoku {
     public String toString() {
         String result = "\n";
 
-        for (int row = 0; row < sudoku.length; row++) {
-            for (int column = 0; column < sudoku[row].length; column++) {
-                result += sudoku[row][column] + "";
+        for (int[] s : sudoku) {
+            for (int column = 0; column < s.length; column++) {
+                result += s[column] + "";
             }
             result += "\n";
         }
