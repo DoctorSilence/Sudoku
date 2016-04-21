@@ -16,11 +16,19 @@ public class Sudoku {
     private ConjuntoA<Integer> madre = new ConjuntoA();
     private int[][] sudoku;
     private int[] limite = cuenta3x3(0, 0); //Checa posiciones 0,0
+    private final int MAX=9; //DUDA, está bien el MAX o hacerlo final
 
     public Sudoku() {
         for (int i = 1; i < 10; i++)
             madre.agrega(i);
+        sudoku=new int [MAX][MAX];
     }
+
+    public Sudoku(int max) {
+        this();
+        this.sudoku = new int[max][max]; //Esta bien instanceo o que hacer?
+    }
+    
 
     public boolean camino(int fila, int col) {
         boolean status=false;
