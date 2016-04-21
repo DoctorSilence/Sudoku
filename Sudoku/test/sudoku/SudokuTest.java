@@ -62,5 +62,20 @@ public class SudokuTest {
         String result = instance.toString();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of cambiaDatos method, of class Sudoku.
+     */
+    @Test
+    public void testCambiaDatos() {
+        System.out.println("cambiaDatos");
+        int fila = 0;
+        int col = 0;
+        int dato = 0;
+        Sudoku instance = new Sudoku();
+        boolean expResult = false;
+        boolean result = instance.cambiaDatos(fila, col, dato);
+        assertEquals(expResult, result);
+    }
     
 }

@@ -112,4 +112,15 @@ public class Sudoku {
         
         return temporal;
     }
+    
+    public boolean cambiaDatos(int fila, int col, int dato){
+        boolean status=false;
+        
+        if(sudoku[fila][col]!=0){
+            sudoku[fila][col]=dato;
+            status=true;
+        }
+        
+        return status;
+    }
 }
