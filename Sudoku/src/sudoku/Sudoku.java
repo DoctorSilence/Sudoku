@@ -48,13 +48,12 @@ public class Sudoku {
             if (fila == sudoku.length && col == sudoku[0].length)
                 status= true;
             else{
-                if(sudoku[fila][col]!=0){
-                    col++;
-                }
-                else{
+                if(col>sudoku[0].length-1){
                     col=0;
                     fila++;
                 }
+                else
+                    col++;
                 status=camino(fila,col);
             }
         }
@@ -123,7 +122,7 @@ public class Sudoku {
         return temporal;
     }
     
-    public boolean cambiaDatos(int fila, int col, int dato){
+    public boolean setCelda(int fila, int col, int dato){
         boolean status=false;
         
         if(sudoku[fila][col]==0&&dato>0&&dato<=9){
@@ -132,5 +131,9 @@ public class Sudoku {
         }
         
         return status;
+    }
+
+    public int[][] getSudoku() {
+        return sudoku;
     }
 }
