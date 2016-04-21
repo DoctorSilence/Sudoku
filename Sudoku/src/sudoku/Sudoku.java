@@ -33,7 +33,7 @@ public class Sudoku {
     
 
     public boolean solucion(int fila, int col) {
-        boolean status=false;
+        boolean status;
         
         if (valido(fila, col)) {
             if (fila > limite[0] + 2 || col > limite[1] + 2)
