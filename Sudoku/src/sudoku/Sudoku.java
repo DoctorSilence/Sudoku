@@ -19,16 +19,19 @@ public class Sudoku {
     private int[][] sudoku;
     private int[] limite = cuenta3x3(0, 0); //Checa posiciones 0,0
     private final int MAX=9; //DUDA, está bien el MAX o hacerlo final
+    private ConjuntoA<Integer>[][] posibilidades;
 
     public Sudoku() {
         for (int i = 1; i < 10; i++)
             madre.agrega(i);
         sudoku=new int [MAX][MAX];
+        posibilidades= new ConjuntoA[MAX][MAX];
     }
 
     public Sudoku(int max) {
         this();
         this.sudoku = new int[max][max]; //Esta bien instanceo o que hacer?
+        this.posibilidades= new ConjuntoA[max][max];
     }
     
 
@@ -50,6 +53,7 @@ public class Sudoku {
                 limite = cuenta3x3(fila, col);
             ConjuntoA<Integer> temporal=agrega(fila, col, limite);
             ConjuntoADT<Integer> dif=madre.diferencia(temporal);
+            posibilidades[fila][col]=(ConjuntoA<Integer>) dif;//Modificacion
             if(dif.getCardinalidad()!=1){
                 Iterator<Integer> it=dif.iterator();
                 sudoku[fila][col] = it.next();
