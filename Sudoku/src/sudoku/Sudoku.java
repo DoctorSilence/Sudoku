@@ -87,15 +87,15 @@ public class Sudoku {
                 else{
                     status=solucion2(fila,col+1);//DERECHA
                     if(!status&&posibil.hasNext()){
-                        sudoku[fila][col]=posibil.next();//DUDA!!!!!
+                        sudoku[fila][col]=-posibil.next();//DUDA!!!!!
                         status=solucion2(fila+1,col);//ABAJO
                     }
                     if(!status&&posibil.hasNext()){
-                        sudoku[fila][col]=posibil.next();//DUDA!!!!!
+                        sudoku[fila][col]=-posibil.next();//DUDA!!!!!
                         status=solucion2(fila-1,col);//IZQUIERDA
                     }
                     if(!status&&posibil.hasNext()){
-                        sudoku[fila][col]=posibil.next();//DUDA!!!!!
+                        sudoku[fila][col]=-posibil.next();//DUDA!!!!!
                         status=solucion2(fila,col-1);//ARRIBA
                     }
                 }
@@ -116,6 +116,9 @@ public class Sudoku {
         return status;
     }
     
+    private void multiplicacionMatricial(){
+        
+    }
     
     private boolean valido(int fila, int col) {
         return fila >= 0 && col < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] <= 0;
