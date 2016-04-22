@@ -19,7 +19,7 @@ public class Sudoku {
     private int[][] sudoku;
     private int[] limite = cuenta3x3(0, 0); //Checa posiciones 0,0
     private final int MAX=9; //DUDA, está bien el MAX o hacerlo final
-    private ConjuntoA<Integer>[][] posibilidades;
+    private ConjuntoADT<Integer>[][] posibilidades;
 
     public Sudoku() {
         for (int i = 1; i < 10; i++)
@@ -77,6 +77,46 @@ public class Sudoku {
         return status;
     }
 
+    private boolean solucion2(int fila, int col){
+        boolean status=false;
+        
+        if(valido(fila,col)){
+            if (fila > limite[0] + 2 || col > limite[1] + 2)
+                limite = cuenta3x3(fila, col);
+            ConjuntoA<Integer> temporal=agrega(fila, col, limite);
+            posibilidades[fila][col]= madre.diferencia(temporal);
+            if(!posibilidades[fila][col].estaVacio()){
+                Iterator<Integer> posibil=posibilidades[fila][col].iterator();
+                sudoku[fila][col]=-posibil.next();
+                solucion2(fila,col+1);
+            }
+            else{
+                if(col!=0)
+                    col--;
+                else{
+                    fila--;
+                    col=sudoku.length-1;
+                }
+            }
+        }
+        else{
+            if(fila==sudoku.length-1&&col==sudoku.length-1)
+                status=true;
+            else{
+                if(col>sudoku[0].length-1){
+                    col=0;
+                    fila++;
+                }
+                else if(sudoku[fila][col]>0)
+                    col++;
+                status=solucion2(fila,col);
+            }
+        }
+        
+        return status;
+    }
+    
+    
     private boolean valido(int fila, int col) {
         return fila >= 0 && col < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] == 0;
     }
@@ -102,7 +142,7 @@ public class Sudoku {
     private void agregaFila(int fila, int col, ConjuntoA<Integer> temporal) {
         if (col < sudoku.length) {
             if(sudoku[fila][col]!=0)
-                temporal.agrega(sudoku[fila][col]);
+                temporal.agrega(Math.abs(sudoku[fila][col]));
             agregaFila(fila, col + 1,temporal);
         }
     }
@@ -117,7 +157,7 @@ public class Sudoku {
     private void agregaCol(int fila, int col, ConjuntoA<Integer> temporal) {
         if (fila < sudoku.length) {
             if(sudoku[fila][col]!=0)
-                temporal.agrega(sudoku[fila][col]);
+                temporal.agrega(Math.abs(sudoku[fila][col]));
             agregaFila(fila+1, col, temporal);
         }
     }
