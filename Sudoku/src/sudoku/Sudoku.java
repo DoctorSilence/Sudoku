@@ -27,12 +27,6 @@ public class Sudoku {
         sudoku=new int [MAX][MAX];
         posibilidades= new ConjuntoA[MAX][MAX];
     }
-
-    public Sudoku(int max) {
-        this();
-        this.sudoku = new int[max][max]; //Esta bien instanceo o que hacer?
-        this.posibilidades= new ConjuntoA[max][max];
-    }
     
 
     public boolean solucion(int fila, int col) {
