@@ -88,29 +88,35 @@ public class Sudoku {
             if(!posibilidades[fila][col].estaVacio()){
                 Iterator<Integer> posibil=posibilidades[fila][col].iterator();
                 sudoku[fila][col]=-posibil.next();
-                solucion2(fila,col+1);
-            }
-            else{
-                if(col!=0)
-                    col--;
+                if(fila==sudoku.length-1&&col==sudoku.length-1)
+                    status= true;
                 else{
-                    fila--;
-                    col=sudoku.length-1;
+                    status=solucion2(fila,col+1);//DERECHA
+                    if(!status&&posibil.hasNext()){
+                        sudoku[fila][col]=posibil.next();//DUDA!!!!!
+                        status=solucion2(fila+1,col);//ABAJO
+                    }
+                    if(!status&&posibil.hasNext()){
+                        sudoku[fila][col]=posibil.next();//DUDA!!!!!
+                        status=solucion2(fila-1,col);//IZQUIERDA
+                    }
+                    if(!status&&posibil.hasNext()){
+                        sudoku[fila][col]=posibil.next();//DUDA!!!!!
+                        status=solucion2(fila,col-1);//ARRIBA
+                    }
                 }
             }
+            else
+                status=false;
         }
         else{
-            if(fila==sudoku.length-1&&col==sudoku.length-1)
-                status=true;
-            else{
-                if(col>sudoku[0].length-1){
-                    col=0;
-                    fila++;
-                }
-                else if(sudoku[fila][col]>0)
-                    col++;
-                status=solucion2(fila,col);
-            }
+            if (col > sudoku[0].length - 1) {
+                col = 0;
+                fila++;
+            } 
+            else if (sudoku[fila][col] > 0)
+                col++;
+            status=solucion2(fila, col);
         }
         
         return status;
@@ -118,7 +124,7 @@ public class Sudoku {
     
     
     private boolean valido(int fila, int col) {
-        return fila >= 0 && col < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] == 0;
+        return fila >= 0 && col < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] <= 0;
     }
 
     /**
