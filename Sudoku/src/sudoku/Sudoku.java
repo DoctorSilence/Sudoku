@@ -21,10 +21,17 @@ public class Sudoku {
     private ConjuntoADT<Integer>[][] posibilidades;
 
     public Sudoku() {
-        for (int i = 1; i < 10; i++)
+        for (int i = 1; i <=MAX; i++)
             madre.agrega(i);
         sudoku=new int [MAX][MAX];
         posibilidades= new ConjuntoA[MAX][MAX];
+    }
+    
+    public Sudoku(int max){
+        for (int i = 1; i <=max; i++)
+            madre.agrega(i);
+        sudoku=new int [max][max];
+        posibilidades=new ConjuntoA[max][max];
     }
     
 
@@ -78,8 +85,10 @@ public class Sudoku {
             posibilidades[fila][col]= madre.diferencia(temporal);
             if(!posibilidades[fila][col].estaVacio()){
                 Iterator<Integer> posibil=posibilidades[fila][col].iterator();
-                if(fila==sudoku.length-1&&col==sudoku[0].length-1)
+                if(fila==sudoku.length-1&&col==sudoku[0].length-1){
                     status= true;
+                    //sudoku[fila][col]=posibil.next();
+                }
                 else
                     status=camina(status,posibil,fila,col);
             }
@@ -106,8 +115,10 @@ public class Sudoku {
             camina(status,it,fila,col);
         }
         else{
-            if(!it.hasNext())
+            if(!it.hasNext()){
                 status= false;
+                sudoku[fila][col]=0;
+            }
             else if(status)
                 status= true;
         }
@@ -202,11 +213,6 @@ public class Sudoku {
 
     public int[][] getSudoku() {
         return sudoku;
-    }
-    
-    
-    public static void main(String[] args) {
-        Sudoku s = new Sudoku();
     }
     
     
