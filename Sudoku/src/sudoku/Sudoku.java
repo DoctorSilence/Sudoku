@@ -17,7 +17,6 @@ public class Sudoku {
     //NO HAY NINGÚN NÚMERO MÁS QUE EL 0?
     private ConjuntoA<Integer> madre = new ConjuntoA();
     private int[][] sudoku;
-    private int[] limite = cuenta3x3(0, 0); //Checa posiciones 0,0
     private final int MAX=9; //DUDA, está bien el MAX o hacerlo final
     private ConjuntoADT<Integer>[][] posibilidades;
 
@@ -29,59 +28,57 @@ public class Sudoku {
     }
     
 
-    public boolean solucion(int fila, int col) {
-        boolean status=false;
-        
-        if (valido(fila, col)) {
-            //MODIFICACION
-            sudoku[fila][col]=-1;
-            if(fila==sudoku.length-1&&col==sudoku[0].length-1)
-                status=true;
-            else{
-                status=solucion(fila,col+1);
-                if(!status)
-                    status=solucion(fila+1,0);
-            }
-            //MODIFICACION
-            if (fila > limite[0] + 2 || col > limite[1] + 2)
-                limite = cuenta3x3(fila, col);
-            ConjuntoA<Integer> temporal=agrega(fila, col, limite);
-            ConjuntoADT<Integer> dif=madre.diferencia(temporal);
-            posibilidades[fila][col]=(ConjuntoA<Integer>) dif;//Modificacion
-            if(dif.getCardinalidad()!=1){
-                Iterator<Integer> it=dif.iterator();
-                sudoku[fila][col] = it.next();
-            }
-            status= solucion(fila,col+1);
-        }
-        else{
-            if (fila == sudoku.length && col == sudoku[0].length)
-                status= true;
-            else{
-                if(col>sudoku[0].length-1){
-                    col=0;
-                    fila++;
-                }
-                else
-                    col++;
-                status=solucion(fila,col);
-            }
-        }
-        
-        return status;
-    }
+//    public boolean solucion(int fila, int col) {
+//        boolean status=false;
+//        
+//        if (valido(fila, col)) {
+//            //MODIFICACION
+//            sudoku[fila][col]=-1;
+//            if(fila==sudoku.length-1&&col==sudoku[0].length-1)
+//                status=true;
+//            else{
+//                status=solucion(fila,col+1);
+//                if(!status)
+//                    status=solucion(fila+1,0);
+//            }
+//            //MODIFICACION
+//            if (fila > limite[0] + 2 || col > limite[1] + 2)
+//                limite = cuenta3x3(fila, col);
+//            ConjuntoA<Integer> temporal=agrega(fila, col, limite);
+//            ConjuntoADT<Integer> dif=madre.diferencia(temporal);
+//            posibilidades[fila][col]=(ConjuntoA<Integer>) dif;//Modificacion
+//            if(dif.getCardinalidad()!=1){
+//                Iterator<Integer> it=dif.iterator();
+//                sudoku[fila][col] = it.next();
+//            }
+//            status= solucion(fila,col+1);
+//        }
+//        else{
+//            if (fila == sudoku.length && col == sudoku[0].length)
+//                status= true;
+//            else{
+//                if(col>sudoku[0].length-1){
+//                    col=0;
+//                    fila++;
+//                }
+//                else
+//                    col++;
+//                status=solucion(fila,col);
+//            }
+//        }
+//        
+//        return status;
+//    }
 
-    private boolean solucion2(int fila, int col){
+    public boolean solucion2(int fila, int col){
         boolean status=false;
         
         if(valido(fila,col)){
-            if (fila > limite[0] + 2 || col > limite[1] + 2)
-                limite = cuenta3x3(fila, col);
-            ConjuntoA<Integer> temporal=agrega(fila, col, limite);
+            ConjuntoA<Integer> temporal=agrega(fila, col);
             posibilidades[fila][col]= madre.diferencia(temporal);
             if(!posibilidades[fila][col].estaVacio()){
                 Iterator<Integer> posibil=posibilidades[fila][col].iterator();
-                if(fila==sudoku.length-1&&col==sudoku.length-1)
+                if(fila==sudoku.length-1&&col==sudoku[0].length-1)
                     status= true;
                 else
                     status=camina(status,posibil,fila,col);
@@ -111,14 +108,14 @@ public class Sudoku {
         else{
             if(!it.hasNext())
                 status= false;
-            if(status)
+            else if(status)
                 status= true;
         }
         return status;
     }
     
     private boolean valido(int fila, int col) {
-        return fila >= 0 && col < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] <= 0;
+        return fila >= 0 && fila < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] <= 0;
     }
 
     /**
@@ -140,25 +137,18 @@ public class Sudoku {
     }
 
     private void agregaFila(int fila, int col, ConjuntoA<Integer> temporal) {
-        if (col < sudoku.length) {
+        if (col < sudoku[0].length) {
             if(sudoku[fila][col]!=0)
-                temporal.agrega(Math.abs(sudoku[fila][col]));
+                temporal.agrega(sudoku[fila][col]);
             agregaFila(fila, col + 1,temporal);
         }
-    }
-    
-    private int[] cuenta3x3(int fila, int col){
-        int[] resultado = null;
-        
-        
-        return resultado;
     }
     
     private void agregaCol(int fila, int col, ConjuntoA<Integer> temporal) {
         if (fila < sudoku.length) {
             if(sudoku[fila][col]!=0)
-                temporal.agrega(Math.abs(sudoku[fila][col]));
-            agregaFila(fila+1, col, temporal);
+                temporal.agrega(sudoku[fila][col]);
+            agregaCol(fila+1, col, temporal);
         }
     }
     
@@ -169,7 +159,8 @@ public class Sudoku {
             columI = checa(col);
             for (int i = filaI; i < filaI+3; i++) {
                 for (int j = columI; j < columI+3; j++) {
-                    temporal.agrega(sudoku[i][j]);
+                    if(sudoku[i][j]!=0)
+                        temporal.agrega(sudoku[i][j]);
                 }
             }  
         }
@@ -188,11 +179,11 @@ public class Sudoku {
         return filaI;
     }
     
-    private ConjuntoA<Integer> agrega(int fila, int col, int[] limite){
+    private ConjuntoA<Integer> agrega(int fila, int col){
         ConjuntoA<Integer> temporal=new ConjuntoA();
         
-        agregaFila(fila, col,temporal);
-        agregaCol(fila, col,temporal);
+        agregaFila(fila, 0,temporal);
+        agregaCol(0, col,temporal);
         agrega3x3(fila, col,temporal);
         
         return temporal;

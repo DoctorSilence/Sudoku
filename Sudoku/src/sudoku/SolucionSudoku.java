@@ -15,7 +15,10 @@ public class SolucionSudoku {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Sudoku s=new Sudoku();
+        System.out.println(s);
+        s.solucion2(0, 0);
+        System.out.println(s);
     }
     
 }
