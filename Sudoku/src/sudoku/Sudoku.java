@@ -116,8 +116,15 @@ public class Sudoku {
         return status;
     }
     
-    private void multiplicacionMatricial(){
-        
+    private boolean camina(boolean status, Iterator<Integer> it, int fila, int col){
+        if(!status&&it.hasNext()){
+            sudoku[fila][col]=it.next();
+            status=solucion2(fila,col+1);
+        }
+        else{
+            if(status)
+                return true;
+        }
     }
     
     private boolean valido(int fila, int col) {
