@@ -124,7 +124,7 @@ public class Sudoku {
         else{
             if(status)
                 return true;
-        }
+        }int n;
     }
     
     private boolean valido(int fila, int col) {
