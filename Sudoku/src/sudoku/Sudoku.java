@@ -81,24 +81,10 @@ public class Sudoku {
             posibilidades[fila][col]= madre.diferencia(temporal);
             if(!posibilidades[fila][col].estaVacio()){
                 Iterator<Integer> posibil=posibilidades[fila][col].iterator();
-                sudoku[fila][col]=-posibil.next();
                 if(fila==sudoku.length-1&&col==sudoku.length-1)
                     status= true;
-                else{
-                    status=solucion2(fila,col+1);//DERECHA
-                    if(!status&&posibil.hasNext()){
-                        sudoku[fila][col]=-posibil.next();//DUDA!!!!!
-                        status=solucion2(fila+1,col);//ABAJO
-                    }
-                    if(!status&&posibil.hasNext()){
-                        sudoku[fila][col]=-posibil.next();//DUDA!!!!!
-                        status=solucion2(fila-1,col);//IZQUIERDA
-                    }
-                    if(!status&&posibil.hasNext()){
-                        sudoku[fila][col]=-posibil.next();//DUDA!!!!!
-                        status=solucion2(fila,col-1);//ARRIBA
-                    }
-                }
+                else
+                    status=camina(status,posibil,fila,col);
             }
             else
                 status=false;
@@ -120,11 +106,15 @@ public class Sudoku {
         if(!status&&it.hasNext()){
             sudoku[fila][col]=it.next();
             status=solucion2(fila,col+1);
+            camina(status,it,fila,col);
         }
         else{
+            if(!it.hasNext())
+                status= false;
             if(status)
-                return true;
-        }int n;
+                status= true;
+        }
+        return status;
     }
     
     private boolean valido(int fila, int col) {
