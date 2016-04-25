@@ -174,7 +174,7 @@ public class Sudoku {
     
     private void agrega3x3(int fila, int col, ConjuntoA<Integer> temporal) {
         int filaI, columI;
-        if(fila&&columna!=null){
+        if(valido(fila,col)){
             filaI = checa(fila);
             columI = checa(col);
             for (int i = filaI; i < filaI+3; i++) {
@@ -182,6 +182,7 @@ public class Sudoku {
                     temporal.agrega(sudoku[i][j]);
                 }
             }  
+        }
     }
     
     public int checa(int fila){
@@ -202,7 +203,7 @@ public class Sudoku {
         
         agregaFila(fila, col,temporal);
         agregaCol(fila, col,temporal);
-        agrega3x3(fila, col, limite,temporal);
+        agrega3x3(fila, col,temporal);
         
         return temporal;
     }
