@@ -12,7 +12,7 @@ import java.util.Iterator;
  * @author Victor Cruz, Fabian Orduña
  */
 public class Sudoku {
-//EL TEMPORAL PUEDE CONTENER AL CERO? O DEJAMOS QUE NO PUEDA TENER AL CERO, 
+    //EL TEMPORAL PUEDE CONTENER AL CERO? O DEJAMOS QUE NO PUEDA TENER AL CERO, 
     //SOLO NÚMEROS DEL 1 AL 9, PORQUE QUE PASA CUANDO HAY UN SUDOKU VACIO Y 
     //NO HAY NINGÚN NÚMERO MÁS QUE EL 0?
     private ConjuntoA<Integer> madre = new ConjuntoA();
@@ -172,8 +172,29 @@ public class Sudoku {
         }
     }
     
-    private void agrega3x3(int fila, int col,int[] limite, ConjuntoA<Integer> temporal) {
-        
+    private void agrega3x3(int fila, int col, ConjuntoA<Integer> temporal) {
+        int filaI, columI;
+        if(fila&&columna!=null){
+            filaI = checa(fila);
+            columI = checa(col);
+            for (int i = filaI; i < filaI+3; i++) {
+                for (int j = columI; j < columI+3; j++) {
+                    temporal.agrega(sudoku[i][j]);
+                }
+            }  
+    }
+    
+    public int checa(int fila){
+        int filaI;
+        int checaF = fila%3;
+        if(checaF==0)
+            filaI = fila;
+        else
+            if(checaF==1)
+                filaI = fila-1;
+            else
+                filaI = fila-2;
+        return filaI;
     }
     
     private ConjuntoA<Integer> agrega(int fila, int col, int[] limite){
@@ -200,4 +221,11 @@ public class Sudoku {
     public int[][] getSudoku() {
         return sudoku;
     }
+    
+    
+    public static void main(String[] args) {
+        Sudoku s = new Sudoku();
+    }
+    
+    
 }
