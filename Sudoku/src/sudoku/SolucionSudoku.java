@@ -17,7 +17,7 @@ public class SolucionSudoku {
     public static void main(String[] args) {
         //Este main prueba como con un sudoku del cual existe una solución en el
         //periodico obtiene la misma solución que éste publica.
-        //Sudoku no vacio
+        //Sudoku no vacio, poniendo los numeros en las casillas simulando GUI
         Sudoku s=new Sudoku();
         s.setCelda(0, 1, 3);
         s.setCelda(0, 2, 2);
