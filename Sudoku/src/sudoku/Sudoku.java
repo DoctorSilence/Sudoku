@@ -16,21 +16,29 @@ public class Sudoku {
     //SOLO NÚMEROS DEL 1 AL 9, PORQUE QUE PASA CUANDO HAY UN SUDOKU VACIO Y 
     //NO HAY NINGÚN NÚMERO MÁS QUE EL 0?
     private ConjuntoA<Integer> madre = new ConjuntoA();
-    private int[][] sudoku;
+    private int[][] sudoku={{1,2,3,4,5,6,7,8,9},
+                            {4,5,6,7,8,9,1,2,3},
+                            {7,8,9,1,2,3,4,5,6},
+                            {0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0},
+                            {0,0,0,0,0,0,0,0,0},};
     private final int MAX=9; //DUDA, está bien el MAX o hacerlo final
     private ConjuntoADT<Integer>[][] posibilidades;
 
     public Sudoku() {
         for (int i = 1; i <=MAX; i++)
             madre.agrega(i);
-        sudoku=new int [MAX][MAX];
+        //sudoku=new int [MAX][MAX];
         posibilidades= new ConjuntoA[MAX][MAX];
     }
     
     public Sudoku(int max){
         for (int i = 1; i <=max; i++)
             madre.agrega(i);
-        sudoku=new int [max][max];
+        //sudoku=new int [max][max];
         posibilidades=new ConjuntoA[max][max];
     }
     
@@ -87,7 +95,7 @@ public class Sudoku {
                 Iterator<Integer> posibil=posibilidades[fila][col].iterator();
                 if(fila==sudoku.length-1&&col==sudoku[0].length-1){
                     status= true;
-                    //sudoku[fila][col]=posibil.next();
+                    sudoku[fila][col]=posibil.next();
                 }
                 else
                     status=camina(status,posibil,fila,col);
@@ -100,7 +108,7 @@ public class Sudoku {
                 col = 0;
                 fila++;
             } 
-            else if (sudoku[fila][col] > 0)
+            else if (sudoku[fila][col] != 0)
                 col++;
             status=solucion2(fila, col);
         }
@@ -114,14 +122,8 @@ public class Sudoku {
             status=solucion2(fila,col+1);
             camina(status,it,fila,col);
         }
-        else{
-            if(!it.hasNext()){
-                status= false;
-                sudoku[fila][col]=0;
-            }
-            else if(status)
-                status= true;
-        }
+        else if(!it.hasNext()&&!status)
+            sudoku[fila][col]=0;
         return status;
     }
     
@@ -134,18 +136,19 @@ public class Sudoku {
      *
      * @return a string representation of the maze
      */
-    public String toString() {
-        String result = "\n";
+    public String toString ()
+   {
+      String result = "\n";
 
-        for (int[] s : sudoku) {
-            for (int column = 0; column < s.length; column++) {
-                result += s[column] + "";
-            }
-            result += "\n";
-        }
+      for (int row=0; row < sudoku.length; row++)
+      {
+         for (int column=0; column < sudoku[row].length; column++)
+            result += sudoku[row][column] + "";
+         result += "\n";
+      }
 
-        return result;
-    }
+      return result;
+   }
 
     private void agregaFila(int fila, int col, ConjuntoA<Integer> temporal) {
         if (col < sudoku[0].length) {
@@ -177,16 +180,17 @@ public class Sudoku {
         }
     }
     
-    public int checa(int fila){
+    private int checa(int fila){
         int filaI;
         int checaF = fila%3;
         if(checaF==0)
             filaI = fila;
-        else
+        else{
             if(checaF==1)
                 filaI = fila-1;
             else
                 filaI = fila-2;
+        }
         return filaI;
     }
     
