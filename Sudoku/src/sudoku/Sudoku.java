@@ -16,7 +16,8 @@ public class Sudoku {
     //SOLO NÚMEROS DEL 1 AL 9, PORQUE QUE PASA CUANDO HAY UN SUDOKU VACIO Y 
     //NO HAY NINGÚN NÚMERO MÁS QUE EL 0?
     private ConjuntoA<Integer> madre = new ConjuntoA();
-    private int[][] sudoku={{1,2,3,4,5,6,7,8,9},
+    private int[][] sudoku
+                          ={{1,2,3,4,5,6,7,8,9},
                             {4,5,6,7,8,9,1,2,3},
                             {7,8,9,1,2,3,4,5,6},
                             {0,0,0,0,0,0,0,0,0},
@@ -38,55 +39,12 @@ public class Sudoku {
     public Sudoku(int max){
         for (int i = 1; i <=max; i++)
             madre.agrega(i);
-        //sudoku=new int [max][max];
+        sudoku=new int [max][max];
         posibilidades=new ConjuntoA[max][max];
     }
-    
-
-//    public boolean solucion(int fila, int col) {
-//        boolean status=false;
-//        
-//        if (valido(fila, col)) {
-//            //MODIFICACION
-//            sudoku[fila][col]=-1;
-//            if(fila==sudoku.length-1&&col==sudoku[0].length-1)
-//                status=true;
-//            else{
-//                status=solucion(fila,col+1);
-//                if(!status)
-//                    status=solucion(fila+1,0);
-//            }
-//            //MODIFICACION
-//            if (fila > limite[0] + 2 || col > limite[1] + 2)
-//                limite = cuenta3x3(fila, col);
-//            ConjuntoA<Integer> temporal=agrega(fila, col, limite);
-//            ConjuntoADT<Integer> dif=madre.diferencia(temporal);
-//            posibilidades[fila][col]=(ConjuntoA<Integer>) dif;//Modificacion
-//            if(dif.getCardinalidad()!=1){
-//                Iterator<Integer> it=dif.iterator();
-//                sudoku[fila][col] = it.next();
-//            }
-//            status= solucion(fila,col+1);
-//        }
-//        else{
-//            if (fila == sudoku.length && col == sudoku[0].length)
-//                status= true;
-//            else{
-//                if(col>sudoku[0].length-1){
-//                    col=0;
-//                    fila++;
-//                }
-//                else
-//                    col++;
-//                status=solucion(fila,col);
-//            }
-//        }
-//        
-//        return status;
-//    }
 
     public boolean solucion2(int fila, int col){
-        boolean status=false;
+        boolean status;
         
         if(valido(fila,col)){
             ConjuntoA<Integer> temporal=agrega(fila, col);
@@ -98,7 +56,7 @@ public class Sudoku {
                     sudoku[fila][col]=posibil.next();
                 }
                 else
-                    status=camina(status,posibil,fila,col);
+                    status=camina(false,posibil,fila,col);
             }
             else
                 status=false;
@@ -120,10 +78,13 @@ public class Sudoku {
         if(!status&&it.hasNext()){
             sudoku[fila][col]=it.next();
             status=solucion2(fila,col+1);
-            camina(status,it,fila,col);
+            if(!status)
+                camina(status,it,fila,col);
         }
-        else if(!it.hasNext()&&!status)
+        else if(!it.hasNext()&&!status){
             sudoku[fila][col]=0;
+            posibilidades[fila][col]=new ConjuntoA();
+        }
         return status;
     }
     
@@ -168,7 +129,7 @@ public class Sudoku {
     
     private void agrega3x3(int fila, int col, ConjuntoA<Integer> temporal) {
         int filaI, columI;
-        if(valido(fila,col)){
+        //if(valido(fila,col)){ //NO hace falta porque en la solucion solo se agrega cuando la casilla es válida
             filaI = checa(fila);
             columI = checa(col);
             for (int i = filaI; i < filaI+3; i++) {
@@ -177,7 +138,7 @@ public class Sudoku {
                         temporal.agrega(sudoku[i][j]);
                 }
             }  
-        }
+        //}
     }
     
     private int checa(int fila){
