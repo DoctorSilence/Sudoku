@@ -17,6 +17,7 @@ public class SolucionSudoku {
     public static void main(String[] args) {
         //Este main prueba como con un sudoku del cual existe una solución en el
         //periodico obtiene la misma solución que éste publica.
+        //Sudoku no vacio
         Sudoku s=new Sudoku();
         s.setCelda(0, 1, 3);
         s.setCelda(0, 2, 2);
@@ -58,8 +59,12 @@ public class SolucionSudoku {
         s.setCelda(8, 6, 4);
         s.setCelda(8, 7, 2);
         System.out.println("Sudoku no resuelto"+s);
-        s.solucion2(0, 0);
+        s.solucion(0, 0);
         System.out.println("Sudoku resuelto"+s);
+        //Para un sudoku vacío
+        Sudoku s1=new Sudoku();
+        s1.solucion(0,0);
+        System.out.println(s1);
     }
     
 }

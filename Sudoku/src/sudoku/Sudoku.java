@@ -12,9 +12,6 @@ import java.util.Iterator;
  * @author Victor Cruz, Fabian Orduña
  */
 public class Sudoku {
-    //EL TEMPORAL PUEDE CONTENER AL CERO? O DEJAMOS QUE NO PUEDA TENER AL CERO, 
-    //SOLO NÚMEROS DEL 1 AL 9, PORQUE QUE PASA CUANDO HAY UN SUDOKU VACIO Y 
-    //NO HAY NINGÚN NÚMERO MÁS QUE EL 0?
     private ConjuntoA<Integer> madre = new ConjuntoA();
     private int[][] sudoku;
     private final int MAX=9; //DUDA, está bien el MAX o hacerlo final
@@ -34,7 +31,7 @@ public class Sudoku {
         posibilidades=new ConjuntoA[max][max];
     }
 
-    public boolean solucion2(int fila, int col){
+    public boolean solucion(int fila, int col){
         boolean status=false;
         
         if(valido(fila,col)){
@@ -59,7 +56,7 @@ public class Sudoku {
             } 
             else if (sudoku[fila][col] != 0)
                 col++;
-            status=solucion2(fila, col);
+            status=solucion(fila, col);
         }
         
         return status;
@@ -68,7 +65,7 @@ public class Sudoku {
     private boolean camina(boolean status, Iterator<Integer> it, int fila, int col){
         if(!status&&it.hasNext()){
             sudoku[fila][col]=it.next();
-            status=solucion2(fila,col+1);
+            status=solucion(fila,col+1);
             if(!status)
                 status=camina(status,it,fila,col);
         }
