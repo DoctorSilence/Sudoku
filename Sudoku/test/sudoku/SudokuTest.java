@@ -89,8 +89,6 @@ public class SudokuTest {
         int[][] expResult = null;
         int[][] result = instance.getSudoku();
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
