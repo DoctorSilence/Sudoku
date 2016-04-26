@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author Victor Cruz, Fabian Orduña
+ * @author Victor Cruz, Fabian Orduña, 
  */
 public class Sudoku {
     private ConjuntoA<Integer> madre = new ConjuntoA();
@@ -24,13 +24,6 @@ public class Sudoku {
         posibilidades= new ConjuntoA[MAX][MAX];
     }
     
-    public Sudoku(int max){
-        for (int i = 1; i <=max; i++)
-            madre.agrega(i);
-        sudoku=new int [max][max];
-        posibilidades=new ConjuntoA[max][max];
-    }
-
     public boolean solucion(int fila, int col){
         boolean status=false;
         
@@ -77,11 +70,12 @@ public class Sudoku {
     }
     
     private boolean valido(int fila, int col) {
-        return fila >= 0 && fila < sudoku.length && col >= 0 && col < sudoku[0].length&&sudoku[fila][col] <= 0;
+        return fila >= 0 && fila < sudoku.length && col >= 0 &&
+                col < sudoku[0].length&&sudoku[fila][col] <= 0;
     }
 
     /**
-     * Returns the maze as a string.
+     * Regresa el sudoku como String
      *
      * @return a string representation of the maze
      */
@@ -117,16 +111,14 @@ public class Sudoku {
     
     private void agrega3x3(int fila, int col, ConjuntoA<Integer> temporal) {
         int filaI, columI;
-        //if(valido(fila,col)){ //NO hace falta porque en la solucion solo se agrega cuando la casilla es válida
-            filaI = checa(fila);
-            columI = checa(col);
-            for (int i = filaI; i < filaI+3; i++) {
-                for (int j = columI; j < columI+3; j++) {
-                    if(sudoku[i][j]!=0)
-                        temporal.agrega(sudoku[i][j]);
-                }
-            }  
-        //}
+        filaI = checa(fila);
+        columI = checa(col);
+        for (int i = filaI; i < filaI+3; i++) {
+            for (int j = columI; j < columI+3; j++) {
+                if(sudoku[i][j]!=0)
+                    temporal.agrega(sudoku[i][j]);
+            }
+        }  
     }
     
     private int checa(int fila){
