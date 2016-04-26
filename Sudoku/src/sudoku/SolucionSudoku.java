@@ -16,9 +16,9 @@ public class SolucionSudoku {
      */
     public static void main(String[] args) {
         Sudoku s=new Sudoku();
-        System.out.println(s);
-        s.solucion2(3, 0);
-        System.out.println(s);
+        System.out.println("Sudoku no resuelto"+s);
+        s.solucion2(0, 0);
+        System.out.println("Sudoku resuelto"+s);
     }
     
 }

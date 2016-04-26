@@ -16,23 +16,14 @@ public class Sudoku {
     //SOLO NÚMEROS DEL 1 AL 9, PORQUE QUE PASA CUANDO HAY UN SUDOKU VACIO Y 
     //NO HAY NINGÚN NÚMERO MÁS QUE EL 0?
     private ConjuntoA<Integer> madre = new ConjuntoA();
-    private int[][] sudoku
-                          ={{1,2,3,4,5,6,7,8,9},
-                            {4,5,6,7,8,9,1,2,3},
-                            {7,8,9,1,2,3,4,5,6},
-                            {0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0},
-                            {0,0,0,0,0,0,0,0,0},};
+    private int[][] sudoku;
     private final int MAX=9; //DUDA, está bien el MAX o hacerlo final
     private ConjuntoADT<Integer>[][] posibilidades;
 
     public Sudoku() {
         for (int i = 1; i <=MAX; i++)
             madre.agrega(i);
-        //sudoku=new int [MAX][MAX];
+        sudoku=new int [MAX][MAX];
         posibilidades= new ConjuntoA[MAX][MAX];
     }
     
@@ -44,7 +35,7 @@ public class Sudoku {
     }
 
     public boolean solucion2(int fila, int col){
-        boolean status;
+        boolean status=false;
         
         if(valido(fila,col)){
             ConjuntoA<Integer> temporal=agrega(fila, col);
@@ -56,7 +47,7 @@ public class Sudoku {
                     sudoku[fila][col]=posibil.next();
                 }
                 else
-                    status=camina(false,posibil,fila,col);
+                    status=camina(status,posibil,fila,col);
             }
             else
                 status=false;
@@ -79,7 +70,7 @@ public class Sudoku {
             sudoku[fila][col]=it.next();
             status=solucion2(fila,col+1);
             if(!status)
-                camina(status,it,fila,col);
+                status=camina(status,it,fila,col);
         }
         else if(!it.hasNext()&&!status){
             sudoku[fila][col]=0;
