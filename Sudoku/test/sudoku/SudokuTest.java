@@ -57,7 +57,7 @@ public class SudokuTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Sudoku instance = new Sudoku(2);
+        Sudoku instance = new Sudoku();
         String expResult ="\n00\n"
                 + "00\n";
         String result = instance.toString();
