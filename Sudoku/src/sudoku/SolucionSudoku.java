@@ -59,10 +59,11 @@ public class SolucionSudoku {
         s.setCelda(8, 6, 4);
         s.setCelda(8, 7, 2);
         System.out.println("Sudoku no resuelto"+s);
-        s.solucion(0, 0);
+        System.out.println(s.solucion(0, 0));
         System.out.println("Sudoku resuelto"+s);
         //Para un sudoku vacío
         Sudoku s1=new Sudoku();
+        System.out.println(s1);
         s1.solucion(0,0);
         System.out.println(s1);
     }

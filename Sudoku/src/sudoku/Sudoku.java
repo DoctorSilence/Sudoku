@@ -34,7 +34,8 @@ public class Sudoku {
                 Iterator<Integer> posibil=posibilidades[fila][col].iterator();
                 if(fila==sudoku.length-1&&col==sudoku[0].length-1){
                     status= true;
-                    sudoku[fila][col]=posibil.next();
+                    if(sudoku[fila][col]==0)
+                        sudoku[fila][col]=posibil.next();
                 }
                 else
                     status=camina(status,posibil,fila,col);
@@ -43,13 +44,19 @@ public class Sudoku {
                 status=false;
         }
         else{
-            if (col > sudoku[0].length - 1) {
-                col = 0;
-                fila++;
-            } 
-            else if (sudoku[fila][col] != 0)
-                col++;
-            status=solucion(fila, col);
+            if(fila==sudoku.length-1&&col==sudoku[0].length-1)
+                status=true;
+            else{
+                if (col > sudoku[0].length - 1) {
+                    col = 0;
+                    fila++;
+                } 
+                else if (sudoku[fila][col] != 0){
+                    col++;
+                }
+                status=solucion(fila, col);
+            }
+                
         }
         
         return status;
@@ -71,7 +78,7 @@ public class Sudoku {
     
     private boolean valido(int fila, int col) {
         return fila >= 0 && fila < sudoku.length && col >= 0 &&
-                col < sudoku[0].length&&sudoku[fila][col] <= 0;
+                col < sudoku[0].length&&sudoku[fila][col] == 0;
     }
 
     /**
