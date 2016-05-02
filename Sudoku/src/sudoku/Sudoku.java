@@ -23,7 +23,7 @@ public class Sudoku {
     private ConjuntoADT<Integer>[][] posibilidades;
 
     /**
-     * La clase inicia con una matriz de enteros vacía (es decir, rellenada con 
+     * La clase inicia con una matriz de enteros vacía (es decir, que contiene 
      * ceros), así como con un conjunto tal que se usará para obtener los valores
      * que si son válidos para poner en una cierta casilla del sudoku.
      */
